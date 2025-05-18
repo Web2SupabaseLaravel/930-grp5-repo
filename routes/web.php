@@ -6,6 +6,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrollmentsController;
 use App\Http\Controllers\QuizzesController;
+use App\Http\Controllers\LessonController;
+
+Route::resource('lesson', LessonController::class);
 use App\Http\Controllers\ReportController;
 Route::resource('dataEnrollments', EnrollmentsController::class);
 
