@@ -20,7 +20,7 @@
                             {{ __('Edit Your Profile') }}
                         </a>
 
-                        @if(auth()->user()->role === 'student' || auth()->user()->role === 'admin')
+                        @if(auth()->user()->role === 'Student' || auth()->user()->role === 'Admin')
                             <a href="{{ route('courses.enrolled') }}" class="text-indigo-600 hover:underline block">
                                 {{ __('My Enrolled Courses') }}
                             </a>
@@ -31,7 +31,7 @@
                             {{ __('My Wishlist') }}
                         </a>
 
-                        @if(auth()->user()->role === 'student' || auth()->user()->role === 'admin')
+                        @if(auth()->user()->role === 'Student' || auth()->user()->role === 'Admin')
                             <a href="{{ route('payments.index') }}" class="text-indigo-600 hover:underline block">
                                 {{ __('My Payments') }}
                             </a>

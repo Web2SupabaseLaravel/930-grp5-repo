@@ -16,6 +16,11 @@
             <p><strong>Created At:</strong> {{ $report->created_at }}</p>
         </div>
     </div>
+    @auth
+    @if(auth()->user()->role === 'Admin')
+        <a href="{{ route('reports.edit', $report->id) }}" class="btn btn-primary">Edit Report</a>
+    @endif
+@endauth
 
     <a href="{{ route('reports.index') }}" class="btn btn-secondary mt-3">Back to list</a>
 </div>

@@ -22,6 +22,7 @@
             </tr>
         </thead>
         <tbody>
+
             @forelse($reports as $report)
                 <tr>
                     <td>{{ $report->id }}</td>
@@ -31,7 +32,10 @@
                     <td>{{ $report->created_at }}</td>
                     <td>
                         <a href="{{ route('reports.show', $report->id) }}" class="btn btn-sm btn-info">View</a>
-                        <a href="{{ route('reports.edit', $report->id) }}" class="btn btn-sm btn-warning">Edit</a>
+
+                        @if(Auth::user() && Auth::user()->role === 'Admin')
+                            <a href="{{ route('reports.edit', $report->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        @endif
                     </td>
                 </tr>
             @empty

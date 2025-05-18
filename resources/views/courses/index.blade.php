@@ -11,7 +11,7 @@
     {{-- مؤقت لعرض دور المستخدم --}}
     <pre>User role: {{ $user ? $user->role : 'Guest' }}</pre>
 
-    @if($user && (strtolower($user->role) === 'admin' || strtolower($user->role) === 'instructor'))
+    @if($user && (strtolower($user->role) === 'Admin' || strtolower($user->role) === 'instructor'))
         <a href="{{ route('courses.create') }}" class="btn btn-primary mb-3">Add New Course</a>
     @endif
 
@@ -38,7 +38,7 @@
                     <td>
                         <a href="{{ route('courses.show', $course->id) }}" class="btn btn-info btn-sm">View</a>
 
-                        @if($user && (strtolower($user->role) === 'admin' || (strtolower($user->role) === 'instructor' && $user->id === $course->instructor_id)))
+                        @if($user && (strtolower($user->role) === 'Admin' || (strtolower($user->role) === 'instructor' && $user->id === $course->instructor_id)))
                             <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
                             <form action="{{ route('courses.destroy', $course->id) }}" method="POST" style="display:inline-block;">
