@@ -7,11 +7,17 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrollmentsController;
 use App\Http\Controllers\QuizzesController;
 use App\Http\Controllers\LessonController;
-
-Route::resource('lesson', LessonController::class);
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\WishlistController;
+Route::resource('lesson', LessonController::class);
 Route::resource('dataEnrollments', EnrollmentsController::class);
 
+Route::resource('certificates', CertificateController::class);
+
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
+Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
 Route::resource('dataQuizzes', QuizzesController::class);
 Route::middleware(['auth'])->group(function () {
