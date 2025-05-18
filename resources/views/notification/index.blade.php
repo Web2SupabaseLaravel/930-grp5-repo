@@ -18,6 +18,7 @@
         <thead>
             <tr>
                 <th>User ID</th>
+                <th>Title</th>
                 <th>Message</th>
                 <th>Read</th>
                 <th>Created At</th>
@@ -27,6 +28,7 @@
             @foreach($notifications as $notification)
                 <tr>
                     <td>{{ $notification->user_id }}</td>
+                    <td>{{ $notification->title }}</td>
                     <td>{{ $notification->message }}</td>
                     <td>{{ $notification->read ? 'Yes' : 'No' }}</td>
                     <td>{{ $notification->created_at }}</td>

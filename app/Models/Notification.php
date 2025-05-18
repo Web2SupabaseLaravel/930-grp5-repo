@@ -12,13 +12,14 @@ class Notification extends Model
 
     public $incrementing = false;
 
-    protected $keyType = 'string';        
+    protected $keyType = 'string';
 
-    protected $table = 'notifications';  
+    protected $table = 'notifications';
 
-    public $timestamps = false;           
+    public $timestamps = false;
     protected $fillable = [
         'user_id',
+        'title',
         'message',
         'read',
     ];

@@ -6,7 +6,8 @@
 <div class="container mt-5">
     <h2>{{ $titleForm ?? 'Notification Form' }}</h2>
 
-    <form action="{{ route($route) }}" method="POST">
+    <form action="{{ route('notifications.store') }}" method="POST">
+
         @csrf
 
         <div class="mb-3">

@@ -16,11 +16,14 @@
         </div>
     @endif
 
-    <form action="{{ $route }}" method="POST">
+    <form action="{{ route('notifications.store') }}" method="POST">
         @csrf
 
         <label>User ID</label><br>
         <input type="text" name="user_id" value="{{ old('user_id') }}"><br><br>
+
+        <label>Title</label><br>
+        <input type="text" name="title" value="{{ old('title') }}"><br><br>
 
         <label>Message</label><br>
         <textarea name="message">{{ old('message') }}</textarea><br><br>
