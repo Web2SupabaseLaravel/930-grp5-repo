@@ -14,16 +14,13 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\NotificationController;
 
 Route::resource('reviews', ReviewController::class);
-Route::get('notification', [NotificationController::class, 'index'])->name('notification.index');
-Route::get('notification/create', [NotificationController::class, 'create'])->name('notification.create');
-Route::post('notification', [NotificationController::class, 'store'])->name('notification.store');
-Route::get('notification/{notification}', [NotificationController::class, 'show'])->name('notification.show');
-Route::get('notification/{notification}/edit', [NotificationController::class, 'edit'])->name('notification.edit');
-Route::put('notification/{notification}', [NotificationController::class, 'update'])->name('notification.update');
-Route::delete('notification/{notification}', [NotificationController::class, 'destroy'])->name('notification.destroy');
-
-
-
+Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+Route::get('notifications/create', [NotificationController::class, 'create'])->name('notifications.create');
+Route::post('notifications', [NotificationController::class, 'store'])->name('notifications.store');
+Route::get('notifications/{notifications}', [NotificationController::class, 'show'])->name('notifications.show');
+Route::get('notifications/{notifications}/edit', [NotificationController::class, 'edit'])->name('notifications.edit');
+Route::put('notifications/{notifications}', [NotificationController::class, 'update'])->name('notifications.update');
+Route::delete('notifications/{notifications}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 Route::resource('lesson', LessonController::class);
 Route::resource('dataEnrollments', EnrollmentsController::class);
 Route::resource('certificates', CertificateController::class);
