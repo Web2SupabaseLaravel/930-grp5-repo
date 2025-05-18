@@ -9,6 +9,14 @@ use App\Models\User;
 
 class CourseController extends Controller
 {
+    public function enrolled()
+{
+    // استعلام لجلب الدورات التي سجل بها المستخدم الحالي (كمثال)
+    $user = auth()->user();
+    $enrolledCourses = $user->courses; // تأكد من العلاقة في الموديل User
+
+    return view('courses.enrolled', compact('enrolledCourses'));
+}
     // عرض قائمة الكورسات
     public function index()
     {
@@ -28,7 +36,7 @@ class CourseController extends Controller
 
         return view('courses.create', compact('instructors'));
     }
-    
+
 
 
     // تخزين كورس جديد

@@ -10,30 +10,26 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\WishlistController;
+
+
+
 Route::resource('lesson', LessonController::class);
 Route::resource('dataEnrollments', EnrollmentsController::class);
-
 Route::resource('certificates', CertificateController::class);
-
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
 Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
 Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
-
 Route::resource('dataQuizzes', QuizzesController::class);
-Route::middleware(['auth'])->group(function () {
-    Route::resource('payments', PaymentController::class);
-});
 Route::resource('courses', CourseController ::class);
-
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
+    Route::resource('payments', PaymentController::class);
+    Route::get('/courses/enrolled', [CourseController::class, 'enrolled'])->name('courses.enrolled');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
