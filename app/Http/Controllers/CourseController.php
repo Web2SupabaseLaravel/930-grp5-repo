@@ -10,21 +10,20 @@ use App\Models\User;
 class CourseController extends Controller
 {
     public function enrolled()
-{
-    // استعلام لجلب الدورات التي سجل بها المستخدم الحالي (كمثال)
-    $user = auth()->user();
-    $enrolledCourses = $user->courses; // تأكد من العلاقة في الموديل User
+    {
+        $user = auth()->user();
 
-    return view('courses.enrolled', compact('enrolledCourses'));
-}
-    // عرض قائمة الكورسات
+        $courses = $user->enrolledCourses()->get();
+
+        return view('courses.enrolled', compact('courses'));
+    }
+
     public function index()
     {
         $courses = Course::all();
         return view('courses.index', compact('courses'));
     }
 
-    // عرض نموذج إنشاء كورس جديد
     public function create()
     {
         $user = auth()->user();
@@ -39,7 +38,6 @@ class CourseController extends Controller
 
 
 
-    // تخزين كورس جديد
     public function store(Request $request)
     {
         $request->validate([
@@ -62,26 +60,22 @@ class CourseController extends Controller
         return redirect()->route('courses.index')->with('success', 'Course created successfully.');
     }
 
-    // عرض كورس معين
     public function show($id)
     {
         $course = Course::findOrFail($id);
         return view('courses.show', compact('course'));
     }
 
-    // عرض نموذج تعديل كورس
     public function edit($id)
     {
         $course = Course::findOrFail($id);
 
-        // تأكد من اسم الدور في قاعدة البيانات، هنا استخدمت instructor
         $teachers = User::where('role', 'instructor')->get();
 
         return view('courses.edit', compact('course', 'teachers'));
     }
 
 
-    // تحديث كورس
     public function update(Request $request, Course $course)
     {
         $request->validate([
@@ -97,7 +91,6 @@ class CourseController extends Controller
         return redirect()->route('courses.index')->with('success', 'Course updated successfully.');
     }
 
-    // حذف كورس
     public function destroy(Course $course)
     {
         $course->delete();

@@ -44,6 +44,10 @@ class Course extends Model
 {
     return $this->hasMany(Enrollment::class);
 }
+public function enrolledUsers()
+{
+    return $this->belongsToMany(User::class, 'enrollments', 'course_id', 'user_id');
+}
 
 public function payments()
 {

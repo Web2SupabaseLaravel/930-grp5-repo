@@ -43,6 +43,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public function enrolledCourses()
+    {
+        return $this->belongsToMany(Course::class, 'enrollments', 'user_id', 'course_id');
+    }
 
     protected $casts = [
         'email_verified_at' => 'datetime',
