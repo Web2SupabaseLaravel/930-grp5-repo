@@ -23,9 +23,10 @@ class PaymentController extends Controller
         if ($user->isAdmin()) {
             $payments = Payment::with(['user', 'course'])->latest()->get();
         } elseif ($user->isInstructor()) {
-            // جيب كل الكورسات يلي هو الانستركتر تبعها
-            $instructorCourseIds = $user->courses()->pluck('id');
-            // جيب كل الدفعات التابعة لهاي الكورسات
+            // جلب معرفات الكورسات التي يُدرّسها المدرس كمصفوفة مسطحة
+            $instructorCourseIds = $user->courses()->pluck('id')->toArray();
+
+            // استخدام whereIn مع مصفوفة غير متداخلة
             $payments = Payment::whereIn('course_id', $instructorCourseIds)
                                ->with(['user', 'course'])
                                ->latest()
@@ -41,14 +42,13 @@ class PaymentController extends Controller
         return view('payments.index', compact('payments'));
     }
 
-
     public function create(Request $request)
-{
-    $course = Course::findOrFail($request->course_id);
-    $student = User::findOrFail($request->student_id);
+    {
+        $course = Course::findOrFail($request->course_id);
+        $student = User::findOrFail($request->student_id);
 
-    return view('payments.create', compact('course', 'student'));
-}
+        return view('payments.create', compact('course', 'student'));
+    }
 
     public function store(Request $request)
     {
@@ -87,7 +87,6 @@ class PaymentController extends Controller
         $courses = Course::all();
         return view('payments.edit', compact('payment', 'courses'));
     }
-
 
     public function update(Request $request, Payment $payment)
     {

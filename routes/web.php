@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrollmentsController;
-use App\Http\Controllers\QuizzesController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CertificateController;
@@ -30,9 +29,6 @@ Route::resource('dataEnrollments', EnrollmentsController::class);
 Route::resource('certificates', CertificateController::class);
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
 Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
-Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
-Route::resource('dataQuizzes', QuizzesController::class);
-Route::resource('courses', CourseController ::class);
 Route::get('/', function () {
     return view('welcome');
 });
