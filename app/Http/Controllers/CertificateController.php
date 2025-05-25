@@ -54,7 +54,7 @@ class CertificateController extends Controller
 public function edit(string $id)
 {
     $certificate = Certificate::findOrFail($id);
-    $users = \App\Models\User::all();     
+    $users = \App\Models\User::all();    
     $courses = \App\Models\Course::all(); 
 
     return view('certificates.edit_certificate', compact('certificate', 'users', 'courses'));

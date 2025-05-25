@@ -2,58 +2,31 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasFactory, Notifiable, HasUuids;
+
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'name',
         'email',
         'password',
-        'role',
     ];
-
-    protected $keyType = 'string';
-    public $incrementing = false;
-
-    public function courses()
-    {
-        return $this->hasMany(Course::class, 'instructor_id');
-    }
-
-    public function isAdmin()
-    {
-        return strtolower($this->role) === 'admin';
-    }
-
-    public function isInstructor()
-    {
-        return strtolower($this->role) === 'instructor';
-    }
-
-    public function isStudent()
-    {
-        return strtolower($this->role) === 'student';
-    }
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
-    public function enrolledCourses()
-    {
-        return $this->belongsToMany(Course::class, 'enrollments', 'user_id', 'course_id');
-    }
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
-    public function enrollments()
-{
-    return $this->hasMany(Enrollment::class);
-}
-
 }

@@ -83,19 +83,19 @@ return [
         ],
 
         'pgsql' => [
-            'driver' => 'pgsql',
-            'url' => env('DB_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'laravel'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => env('DB_CHARSET', 'utf8'),
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'search_path' => 'public',
-            'sslmode' => 'prefer',
-        ],
+    'driver' => 'pgsql',
+    'url' => env('DB_URL'),  // يمكن تركها كما هي أو حذفه إذا لا تستخدم DB_URL
+    'host' => env('DB_HOST', '127.0.0.1'),  // تأكد أن DB_HOST في .env صحيح
+    'port' => env('DB_PORT', '5432'),       // تأكد من رقم البورت في .env
+    'database' => env('DB_DATABASE', 'laravel'),  // تأكد من اسم قاعدة البيانات في .env
+    'username' => env('DB_USERNAME', 'root'),      // تأكد من اسم المستخدم في .env
+    'password' => env('DB_PASSWORD', ''),          // تأكد من كلمة المرور في .env
+    'charset' => env('DB_CHARSET', 'utf8'),        // يمكن إبقاءها utf8
+    'prefix' => '',
+    'prefix_indexes' => true,
+    'search_path' => 'public',
+    'sslmode' => 'prefer',   // جيد مع supabase لأنه يحتاج اتصال SSL
+],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
