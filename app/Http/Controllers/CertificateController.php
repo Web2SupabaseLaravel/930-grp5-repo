@@ -8,14 +8,12 @@ use App\Models\Certificate;
 
 class CertificateController extends Controller
 {
-    // عرض جميع الشهادات
     public function index()
     {
         $certificates = Certificate::all();
         return view('certificates.index', compact('certificates'));
     }
 
-    // نموذج إنشاء شهادة جديدة
     public function create()
     {
         $data = [
@@ -29,7 +27,6 @@ class CertificateController extends Controller
         return view('certificates.form_certificate', $data);
     }
 
-    // حفظ الشهادة الجديدة مع التحقق من وجود الطالب والدورة
     public function store(Request $request)
     {
         $request->validate([
@@ -48,7 +45,6 @@ class CertificateController extends Controller
         return redirect()->route('certificates.create')->with('success', 'تم إنشاء الشهادة بنجاح');
     }
 
-    // عرض شهادة معينة
     public function show(string $id)
     {
         $certificate = Certificate::findOrFail($id);
@@ -58,13 +54,12 @@ class CertificateController extends Controller
 public function edit(string $id)
 {
     $certificate = Certificate::findOrFail($id);
-    $users = \App\Models\User::all();     // جلب جميع المستخدمين
-    $courses = \App\Models\Course::all(); // جلب جميع الدورات
+    $users = \App\Models\User::all();     
+    $courses = \App\Models\Course::all(); 
 
     return view('certificates.edit_certificate', compact('certificate', 'users', 'courses'));
 }
 
-    // تحديث شهادة معينة مع التحقق من وجود الطالب والدورة
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -82,7 +77,6 @@ public function edit(string $id)
         return redirect()->route('certificates.index')->with('success', 'تم تحديث الشهادة بنجاح');
     }
 
-    // حذف شهادة
     public function destroy(string $id)
     {
         $certificate = Certificate::findOrFail($id);
