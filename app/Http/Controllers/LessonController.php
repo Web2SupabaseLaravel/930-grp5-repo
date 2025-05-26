@@ -62,7 +62,7 @@ class LessonController extends Controller
 
 
         $data['lesson'] = $lesson;
-        $data['route'] = route('lesson.update', $lesson->id); /
+        $data['route'] = route('lesson.update', $lesson->id); 
         $data['method'] = 'put';
         $data['titleForm'] = 'Edit Lesson';
         $data['submitButton'] = 'Update';

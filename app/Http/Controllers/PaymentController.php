@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\Course;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\User;
@@ -104,6 +105,19 @@ class PaymentController extends Controller
 
         if ($request->status === 'completed') {
             $data['paid_at'] = now();
+
+            // إنشاء الانرولمنت إذا لم يكن موجودًا مسبقًا
+            $existingEnrollment = Enrollment::where('user_id', $payment->user_id)
+                                            ->where('course_id', $payment->course_id)
+                                            ->first();
+
+            if (!$existingEnrollment) {
+                Enrollment::create([
+                    'user_id' => $payment->user_id,
+                    'course_id' => $payment->course_id,
+                    'enrollment_date' => now(),
+                ]);
+            }
         } else {
             $data['paid_at'] = null;
         }
