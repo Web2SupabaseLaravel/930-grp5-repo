@@ -12,7 +12,7 @@ class Report extends Model
 
     protected $table = 'reports';
 
-    // المفتاح الأساسي UUID نصي
+
     protected $keyType = 'string';
 
     public $incrementing = false;
@@ -27,7 +27,6 @@ class Report extends Model
         'lesson_id',
         'message',
         'status',
-        // أضف أي حقول أخرى مثل cv_pdf_path لو تحتاج
     ];
 
     protected $casts = [
@@ -37,21 +36,21 @@ class Report extends Model
         'lesson_id' => 'string',
     ];
 
-    // أنواع التقارير
+
     public const TYPES = [
         'technical_issue' => 'Technical Issue',
         'become_instructor' => 'Become Instructor',
         'certificate_request' => 'Certificate Request',
     ];
 
-    // حالات التقرير
+
     public const STATUSES = [
         'pending' => 'Pending',
         'reviewed' => 'Reviewed',
         'resolved' => 'Resolved',
     ];
 
-    // توليد UUID تلقائي عند الإنشاء
+
     protected static function boot()
     {
         parent::boot();

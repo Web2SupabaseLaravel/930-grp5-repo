@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
-    // عرض قائمة التقارير
+
     public function index()
     {
         $user = Auth::user();
@@ -24,7 +24,7 @@ class ReportController extends Controller
         return view('reports.index', compact('reports'));
     }
 
-    // عرض نموذج إنشاء تقرير
+
     public function create()
     {
         $data['report'] = new Report();
@@ -48,7 +48,6 @@ class ReportController extends Controller
         return view('reports.form_report', $data);
     }
 
-    // تخزين تقرير جديد
     public function store(Request $request)
     {
         $rules = [
@@ -83,13 +82,13 @@ class ReportController extends Controller
         return redirect()->back()->with('success', 'Report submitted successfully.');
     }
 
-    // عرض تقرير معين
+  
     public function show($id)
     {
         $report = Report::findOrFail($id);
         $user = Auth::user();
 
-        // السماح فقط للمستخدم صاحب التقرير أو الأدمن
+
         if ($user->id !== $report->reporter_id && $user->role !== 'Admin') {
             return redirect()->route('reports.index')->with('error', 'Access denied.');
         }
@@ -97,7 +96,7 @@ class ReportController extends Controller
         return view('reports.show', compact('report'));
     }
 
-    // صفحة تعديل تقرير (للأدمن فقط)
+
     public function edit($id)
     {
         $report = Report::findOrFail($id);
@@ -120,14 +119,14 @@ class ReportController extends Controller
             'resolved' => 'Resolved',
         ];
 
-        // مفتاح يخبر الفورم أن التعديل مقتصر على حالة التقرير فقط
+   
         $data['editStatusOnly'] = true;
 
         return view('reports.form_report', $data);
     }
 
 
-    // تحديث تقرير (للأدمن فقط)
+
     public function update(Request $request, $id)
     {
         $user = Auth::user();
@@ -137,7 +136,7 @@ class ReportController extends Controller
                              ->with('error', 'You do not have permission to update this report.');
         }
 
-        // إذا التعديل مقتصر على الحالة فقط (مثلاً استدعاء من الفورم الجديد)
+   
         if ($request->has('status') && !$request->has('type')) {
             $request->validate([
                 'status' => 'required|in:pending,reviewed,resolved',
@@ -152,13 +151,13 @@ class ReportController extends Controller
                              ->with('success', 'Report status updated successfully.');
         }
     }
-    // صفحة طلب Become Instructor
+
     public function createBecomeInstructor()
     {
         return view('reports.become_instructor');
     }
 
-    // تخزين طلب Become Instructor
+
     public function storeBecomeInstructor(Request $request)
     {
         $request->validate([
@@ -183,7 +182,7 @@ class ReportController extends Controller
         return back()->with('success', 'Your request has been submitted.');
     }
 
-    // الموافقة على طلب Become Instructor
+
     public function approveInstructor($id)
     {
         $report = Report::findOrFail($id);
@@ -203,7 +202,7 @@ class ReportController extends Controller
         return back()->with('success', 'User promoted to instructor.');
     }
 
-    // عرض طلبات Become Instructor (Admin)
+  
     public function listInstructorRequests()
     {
         $requests = Report::where('type', 'become_instructor')
