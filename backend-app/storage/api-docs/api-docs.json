@@ -1,0 +1,210 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Learnify API",
+        "description": "API documentation for the Learnify application",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/lessons": {
+            "get": {
+                "tags": [
+                    "Lessons"
+                ],
+                "summary": "Get all lessons",
+                "operationId": "e1abe40dbd1870d06943517976c11507",
+                "responses": {
+                    "200": {
+                        "description": "List of lessons"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Lessons"
+                ],
+                "summary": "Create a new lesson",
+                "operationId": "b196bee153377a601911ff0db5a9aa01",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "course_id",
+                                    "title",
+                                    "content_type"
+                                ],
+                                "properties": {
+                                    "course_id": {
+                                        "type": "string",
+                                        "example": "uuid-of-course"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Lesson Title"
+                                    },
+                                    "content_type": {
+                                        "type": "string",
+                                        "example": "Text"
+                                    },
+                                    "content_url": {
+                                        "type": "string",
+                                        "example": "https://example.com"
+                                    },
+                                    "order": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Lesson created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/lessons/create": {
+            "get": {
+                "tags": [
+                    "Lessons"
+                ],
+                "summary": "Get form to create a lesson",
+                "operationId": "ee85171cc7055a7b73e1c07527c2fbcf",
+                "responses": {
+                    "200": {
+                        "description": "Form to create a lesson"
+                    }
+                }
+            }
+        },
+        "/lessons/{id}/edit": {
+            "get": {
+                "tags": [
+                    "Lessons"
+                ],
+                "summary": "Get form to edit a lesson",
+                "operationId": "daba4830345fc8a7562baed57a22d445",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Lesson UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Form to edit the lesson"
+                    },
+                    "404": {
+                        "description": "Lesson not found"
+                    }
+                }
+            }
+        },
+        "/lessons/{id}": {
+            "put": {
+                "tags": [
+                    "Lessons"
+                ],
+                "summary": "Update a lesson",
+                "operationId": "174f9b467c880dd9da9ac1039336a78f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Lesson UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "course_id": {
+                                        "type": "string",
+                                        "example": "uuid-of-course"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Updated Lesson Title"
+                                    },
+                                    "content_type": {
+                                        "type": "string",
+                                        "example": "Video"
+                                    },
+                                    "content_url": {
+                                        "type": "string",
+                                        "example": "https://example.com"
+                                    },
+                                    "order": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lesson updated successfully"
+                    },
+                    "404": {
+                        "description": "Lesson not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Lessons"
+                ],
+                "summary": "Delete a lesson",
+                "operationId": "ec478fa5f24464853852de31f86230c3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Lesson UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lesson deleted successfully"
+                    },
+                    "404": {
+                        "description": "Lesson not found"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Lessons",
+            "description": "Lessons"
+        }
+    ]
+}
