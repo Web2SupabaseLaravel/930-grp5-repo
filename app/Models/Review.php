@@ -29,6 +29,12 @@ class Review extends Model
         'comment',
     ];
 
+    protected $casts = [
+        'user_id' => 'integer',
+        'course_id' => 'string',
+        'rating' => 'integer',
+    ];
+
   
     protected static function boot()
     {

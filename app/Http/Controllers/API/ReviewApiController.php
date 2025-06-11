@@ -1,92 +1,94 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ReviewApiController extends Controller
 {
-    
+   
     public function index()
     {
-        return response()->json(Review::all());
+        $reviews = Review::all();
+        return response()->json($reviews, 200);
     }
 
-
+ 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'user_id' => 'required|uuid|exists:users,id',
             'course_id' => 'required|uuid|exists:courses,id',
             'rating' => 'required|integer|min:1|max:5',
-            'comment' => 'nullable|string'
+            'comment' => 'nullable|string|max:500',
         ]);
 
-        $review = Review::create($validated);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
-        return response()->json([
-            'message' => 'Review created successfully',
-            'review' => $review
-        ], 201);
+        try {
+            $review = Review::create($validator->validated());
+            return response()->json([
+                'message' => 'Review created successfully!',
+                'review' => $review
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to create review.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
-    public function show($id)
-{
-    try {
-        $review = Review::findOrFail($id);
-        return response()->json($review);
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => 'Review not found or server error',
-            'message' => $e->getMessage(),
-        ], 404);
+
+  
+    public function show(Review $review)
+    {
+        return response()->json($review, 200);
+    }
+
+  
+    public function update(Request $request, Review $review)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'sometimes|uuid|exists:users,id',
+            'course_id' => 'sometimes|uuid|exists:courses,id',
+            'rating' => 'sometimes|integer|min:1|max:5',
+            'comment' => 'nullable|string|max:500',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        try {
+            $review->update($validator->validated());
+            return response()->json([
+                'message' => 'Review updated successfully!',
+                'review' => $review
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to update review.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+   
+    public function destroy(Review $review)
+    {
+        try {
+            $review->delete();
+            return response()->json(['message' => 'Review deleted successfully!'], 204);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to delete review.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }
-
-public function destroy($id)
-{
-    try {
-        $review = Review::findOrFail($id);
-        $review->delete();
-
-        return response()->json(['message' => 'Review deleted successfully']);
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => 'Delete failed',
-            'message' => $e->getMessage(),
-        ], 500);
-    }
-}
-
-
-public function update(Request $request, $id)
-{
-
-    $request->validate([
-        'user_id' => 'sometimes|uuid',
-        'course_id' => 'sometimes|uuid',
-        'rating' => 'sometimes|integer|min:1|max:5',
-        'comment' => 'nullable|string'
-    ]);
-
-    try {
-        $review = Review::findOrFail($id);
-        $review->update($request->only(['user_id', 'course_id', 'rating', 'comment']));
-
-        return response()->json([
-            'message' => 'Review updated successfully',
-            'data' => $review
-        ], 200);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => 'Update failed',
-            'message' => $e->getMessage()
-        ], 500);
-    }
-}
-
-}
-
-
